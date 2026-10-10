@@ -1,0 +1,29 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua 5.1
+        run: sudo apt-get update && sudo apt-get install -y lua5.1
+
+      - name: Check Lua syntax
+        run: |
+          status=0
+
+          for file in $(find lua -name "*.lua"); do
+            sed 's/\bcontinue\b/do end/g' "$file" > /tmp/syntax_check.lua
+
+            if ! luac5.1 -p /tmp/syntax_check.lua; then
+              echo "Syntax error in $file"
+              status=1
+            fi
+          done
+
+          exit $status
