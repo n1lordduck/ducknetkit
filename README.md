@@ -54,8 +54,9 @@ See [ARCHITECTURE.md](./ARCHITECTURE.md) for how the wire format, reassembly, an
 * `lua/duck_netkit/server` - the per-player send queue and rate throttle (`sv_send.lua`).
 * `lua/duck_netkit/client` - the client-side send queue (`cl_send.lua`).
 * `lua/autorun` - the server and client entry points that load everything and fire `DuckNetKit.Ready`.
-* `tests` - a standalone Lua test suite that stubs `net`/`util`/`hook` and exercises the library's logic outside GMod.
-* `.github/workflows` - CI: `tests.yml` runs the test suite, `lint.yml` checks every file's Lua syntax (allowing GLua's `continue`, which isn't valid in vanilla Lua).
+* `lua/tests/duck_netkit` - [GLuaTest](https://github.com/CFC-Servers/GLuaTest) cases that run inside a real GMod server in CI, against the real `util.Compress`/`TableToJSON`.
+* `tests` - a standalone Lua test suite that stubs `net`/`util`/`hook` and exercises the wire format, reassembly, and send queues outside GMod, where a real client/server round trip isn't practical to automate.
+* `.github/workflows` - CI: `tests.yml` runs both test suites above, `lint.yml` checks every file's Lua syntax (allowing GLua's `continue`, which isn't valid in vanilla Lua).
 
 ## License
 

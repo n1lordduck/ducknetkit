@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  tests:
+  unit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,3 +15,6 @@ jobs:
 
       - name: Run test suite
         run: lua5.3 tests/duck_netkit_spec.lua
+
+  gluatest:
+    uses: CFC-Servers/GLuaTest/.github/workflows/run_tests.yml@main
